@@ -1,23 +1,4 @@
-const INPUT_NAMBER = document.getElementById('input-namber')
-const INPUT_BUTON = document.getElementById('input-buton')
-const conteiner = document.getElementById('conteiner')
-const listasPizzas = document.getElementById("listasPizzas");
-INPUT_BUTON.addEventListener('click', ()=> {
-    console.log(INPUT_NAMBER.value);
-});
-
-function mostrarValorInput(){
-    console.log(INPUT_NAMBER.value)
-}
-let pizzas = JSON.parse(localStorage.getItem("pizzas")) || [];
-
-const saveLocalStorage = () => {
-  localStorage.setItem("pizzas", JSON.stringify(pizzas));
-};
-
-const saveDate = () => {
-	pizzas = [
-	  ...pizzas,
+const pizzas =  [
     {   
 	    id: 1 ,
 		tipo: "caprese",
@@ -55,46 +36,47 @@ const saveDate = () => {
 		precio: 1500,
 	},
 ]
-};
 
+const input_namber = document.getElementById('input-namber')
+const conteiner = document.getElementById('conteiner')
+const form = document.getElementById("form")
+const input_buton = document.getElementById('input-buton')
 
-const renderPizza=(list)=> {
-  const {id,tipo,precio}= list;
+input_buton.addEventListener('click', ()=> {
+    console.log(input_namber.value);
+});
 
-  return `
+function mostrarValorInput(){
+    console.log(input_namber.value)
+}
 
-	  <div id="conteiner" >
-	  <h2 >Pizza: ${tipo} N°${id} </h2>
-	  <h3 >Pizza: ${tipo} Cuesta: ${precio}</h3>
-	
-		</div>
-		`;
-	};
-	const renderList = () => {
-		conteiner.innerHTML = pizzas.map((list) => renderPizza(list)).join("");
-	  };
+const buscaPizza = (value) => pizzas.find((pizza) => pizza.id === value)
 
+const renderBusqueda = (pizza) => {
+    if (pizza) {
+		conteiner.innerHTML = `
+      <div >
+      <h2 >${pizza.tipo}</h2>
+      <h3 > Precio: $${pizza.precio} </h3>
+      </div>
+      `
+    }
+}
 
-	  const submitLis = (e) => {
-		e.preventDefault();
-		if (isValid()) {
-		  saveDate();
-		  console.log(pizzas);
-		  listasPizzas.reset();
-		  saveLocalStorage();
-		  renderList();
-		  setDateIntervals();
-		}
-	  };
-	  
-	  const init = () => {
-		
-		renderList();
-	  
-		window.addEventListener("DOMContentLoaded", setDateIntervals);
-		listasPizzas.addEventListener("submit", submitLis);
-	  };
-	  
-	  init();
+const submitSearch = (e) => {
+    e.preventDefault()
+	const searchValue = input_buton.value;
+    if (searchValue) {
+    }
+    const searchedPizza = buscaPizza(Number(searchValue))
+    renderBusqueda(searchedPizza);
+}
+
+const init = () => {
+form.addEventListener("submit", submitSearch)
+}
+
+init()
+
 
 
