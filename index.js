@@ -37,17 +37,17 @@ const pizzas =  [
 	},
 ]
 
-const input_namber = document.getElementById('input-namber')
+const input_number = document.getElementById('input-number')
 const conteiner = document.getElementById('conteiner')
 const form = document.getElementById("form")
 const input_buton = document.getElementById('input-buton')
 
 input_buton.addEventListener('click', ()=> {
-    console.log(input_namber.value);
+    console.log(input_number.value);
 });
 
 function mostrarValorInput(){
-    console.log(input_namber.value)
+    console.log(input_number.value)
 }
 
 const buscaPizza = (value) => pizzas.find((pizza) => pizza.id === value)
@@ -65,12 +65,14 @@ const renderBusqueda = (pizza) => {
 
 const submitSearch = (e) => {
     e.preventDefault()
-	const searchValue = input_buton.value;
-    if (searchValue) {
-    }
-    const searchedPizza = buscaPizza(Number(searchValue))
+	const searchValue = input_number.value;
+    if (!searchValue || searchValue == "") 
+     return console.log ("Ingrese un numero del 1 al 6");
+
+    const searchedPizza = buscaPizza(parseInt(searchValue));
+	console.log(searchedPizza);
     renderBusqueda(searchedPizza);
-}
+};
 
 const init = () => {
 form.addEventListener("submit", submitSearch)
